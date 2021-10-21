@@ -1,0 +1,5 @@
+train: ../finalproject/data/labelledimages/train/images
+val: ../finalproject/data/labelledimages/valid/images
+
+nc: 2
+names: ['car', 'truck']
