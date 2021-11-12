@@ -4,6 +4,6 @@ mkdir -p data
 mkdir -p data/labelledimages
 cd data/labelledimages
 
-ROBOFLOWURL="https://app.roboflow.com/ds/OHzwf3QUxn?key=17aE2fjUOq"
+ROBOFLOWURL="https://app.roboflow.com/ds/gKCHZalU9J?key=0ZgC42DoXu"
 
 curl -L $ROBOFLOWURL > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
