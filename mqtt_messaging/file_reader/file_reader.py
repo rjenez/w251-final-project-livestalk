@@ -54,12 +54,12 @@ class Handler(FileSystemEventHandler):
             print("Received created event - %s." % event.src_path)
             with open(event.src_path, 'rb') as f:
                # file_bytes =f.read()
-                bytes_str = f.read()
-               # json_object = {"name" : event.src_path, "bytes" : bytes_str}
+                bytes_str = base64.b64encode(f.read())
+                json_object = {"name" : event.src_path, "bytes" : bytes_str}
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
                 #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
-                self.mqtt_client.publish(LOCAL_MQTT_TOPIC, bytes(bytes_str))
+                self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_object)
 
 
         elif event.event_type == 'modified':

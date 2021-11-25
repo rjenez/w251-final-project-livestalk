@@ -2,6 +2,8 @@ import paho.mqtt.client as mqtt
 import sys
 import pickle
 import ast
+import json
+import base64
 
 LOCAL_MQTT_HOST=sys.argv[1]
 LOCAL_MQTT_PORT=1883
@@ -17,12 +19,14 @@ def on_message(client,userdata, msg):
     # if we wanted to re-publish this message, something like this should work
     # msg = msg.payload
     # remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
-    #data = pickle.loads(ast.literal_eval(msg.payload))
+    data = json.loads(msg.payload)
+    file_name = "var/www/s3/" + data["name"]
+    image_data = base64.b64decode(data["bytes"])
     #print(data)
-    with open("var/www/s3/my_file.JPG", "wb") as binary_file:
+    with open(file_name, "wb") as binary_file:
         print(msg.payload)
     # Write bytes to file
-        binary_file.write(msg.payload)
+        binary_file.write(image_data)
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
 
