@@ -41,5 +41,4 @@ RUN pip3 install watchdog
 COPY file_reader.py file_reader.py
 #COPY haarcascade_frontalface_default.xml haarcascade_frontalface_default.xml
 RUN mkdir /files
-
-
+ENTRYPOINT ["python3","-u", "file_reader.py"]
