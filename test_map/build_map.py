@@ -1,5 +1,3 @@
-# %%
-
 # Standard imports + exif tool parser
 from os import listdir
 import pandas as pd
