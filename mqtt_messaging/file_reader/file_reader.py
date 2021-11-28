@@ -55,7 +55,9 @@ class Handler(FileSystemEventHandler):
             with open(event.src_path, 'rb') as f:
                # file_bytes =f.read()
                 bytes_str = base64.b64encode(f.read()).decode('utf-8')
+                print(bytes_str)
                 if bytes_str:
+                    print('in')
                     json_object = {"name" : event.src_path, "bytes" : bytes_str}
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
