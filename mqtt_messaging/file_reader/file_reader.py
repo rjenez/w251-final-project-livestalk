@@ -49,10 +49,9 @@ class Handler(FileSystemEventHandler):
         if event.is_directory:
             return None
 
-        elif event.event_type == 'created':
+        elif event.event_type == 'modified':
             # Take any action here when a file is first created.
-            print("Received created event - %s." % event.src_path)
-            time.sleep(4)
+            print("Received modified event - %s." % event.src_path)
             with open(event.src_path, 'rb') as f:
                # file_bytes =f.read()
                 bytes_str = base64.b64encode(f.read()).decode('utf-8')
@@ -64,9 +63,9 @@ class Handler(FileSystemEventHandler):
                 self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json.dumps(json_object))
 
 
-        elif event.event_type == 'modified':
+        elif event.event_type == 'created':
             # Taken any action here when a file is modified.
-            print("Received modified event - %s." % event.src_path)
+            print("Received created event - %s." % event.src_path)
 
 def on_connect_local(client, userdata, flags, rc):
     print("connected to local broker with rc: " + str(rc))
