@@ -52,6 +52,7 @@ class Handler(FileSystemEventHandler):
         elif event.event_type == 'created':
             # Take any action here when a file is first created.
             print("Received created event - %s." % event.src_path)
+            time.sleep(4)
             with open(event.src_path, 'rb') as f:
                # file_bytes =f.read()
                 bytes_str = base64.b64encode(f.read()).decode('utf-8')
