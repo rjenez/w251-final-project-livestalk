@@ -4,8 +4,8 @@ On edge device (text in arrows like `<text>` represents a parameter whose name c
   1. Build mqtt broker and file reader images by running the following in this directory: 
       ```
       docker build -t mqtt_broker -f mqtt_broker/Dockerfile .
-      docker build -t mqtt_message_forwarder -f mqtt_message_forwarder/Dockerfile.yolov5mqtt .
-      docker build -t file_reader -f file_reader/Dockerfile .
+      docker build -t mqtt_message_forwarder -f mqtt_message_forwarder/Dockerfile .
+      docker build -t file_reader -f file_reader/Dockerfile.yolov5mqtt .
       ```
   2. Create docker network (suggestion `mqtt`): 
       ```
