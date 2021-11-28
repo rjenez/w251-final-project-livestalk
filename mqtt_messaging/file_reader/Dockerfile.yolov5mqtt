@@ -38,7 +38,7 @@ RUN pip3 install Cython
 RUN pip3 install numpy
 RUN pip3 install watchdog
 # example from https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_gui/py_video_display/py_video_display.html
-COPY file_reader.py file_reader.py
+COPY /file_reader/file_reader.py file_reader.py
 #COPY haarcascade_frontalface_default.xml haarcascade_frontalface_default.xml
 RUN mkdir /files
 ENTRYPOINT ["python3","-u", "file_reader.py"]
