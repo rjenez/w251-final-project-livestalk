@@ -59,7 +59,7 @@ class Handler(FileSystemEventHandler):
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
                 self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
-                #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json.dumps(json_object))
+                self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json.dumps(json_object))
 
 
         elif event.event_type == 'modified':
