@@ -16,12 +16,13 @@ def on_connect_local(client, userdata, flags, rc):
 	
 def on_message(client,userdata, msg):
   try:
-    print("message received: ",str(msg))
     # if we wanted to re-publish this message, something like this should work
     msg = msg.payload
+    print(msg)
     remote_mqttclient = mqtt.Client()
     remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
     remote_mqttclient.publish(REMOTE_MQTT_TOPIC, msg)
+    print("sent")
   except:
     print("Unexpected error:", sys.exc_info()[0])
 
