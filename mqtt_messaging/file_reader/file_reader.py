@@ -58,7 +58,7 @@ class Handler(FileSystemEventHandler):
                 json_object = {"name" : event.src_path, "bytes" : bytes_str}
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
-                print(bytes_str)
+                print(str(base64.b64encode(f.read())))
                 self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
                 self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json.dumps(json_object))
 
