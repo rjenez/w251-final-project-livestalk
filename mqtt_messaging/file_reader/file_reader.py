@@ -25,7 +25,7 @@ class Watcher:
         local_mqttclient = mqtt.Client()
         #local_mqttclient.on_connect = on_connect_local
         #local_mqttclient.on_disconnect=on_disconnect_local
-        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)  
+        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 3600)
         event_handler = Handler(local_mqttclient)
         #event_handler = Handler()
         self.observer.schedule(event_handler, FILE_DIRECTORY, recursive=True)
@@ -58,11 +58,12 @@ class Handler(FileSystemEventHandler):
                 #print(bytes_str)
                 if bytes_str:
                     print('in')
-                    json_object = {"name" : event.src_path, "bytes" : "test_string"}
+                    json_object = {"name" : event.src_path, "bytes" : "test"}
+                    json_string = json.dumps(json_object)
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
                     #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
-                    self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json.dumps(json_object))
+                    self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
 
 
         elif event.event_type == 'created':
