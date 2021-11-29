@@ -58,7 +58,7 @@ class Handler(FileSystemEventHandler):
                 #print(bytes_str)
                 if bytes_str:
                     print('in')
-                    json_object = {"name" : event.src_path, "bytes" : bytes_str}
+                    json_object = {"name" : event.src_path.rsplit('/', 1)[-1], "bytes" : bytes_str}
                     json_string = json.dumps(json_object)
                # pickle_string = str(pickle.dumps(json_object))
                # prit(pickle_string)
