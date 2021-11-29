@@ -51,8 +51,26 @@ class Handler(FileSystemEventHandler):
 
         elif event.event_type == 'modified':
             # Take any action here when a file is first created.
-            print("Received modified event - %s." % event.src_path)
-            with open(event.src_path, 'rb') as f:
+            #print("Received modified event - %s." % event.src_path)
+            # with open(event.src_path, 'rb') as f:
+            #    # file_bytes =f.read()
+            #     bytes_str = base64.b64encode(f.read()).decode('utf-8')
+            #     #print(bytes_str)
+            #     if bytes_str:
+            #         print('in')
+            #         base_file_name = event.src_path.rsplit('/', 1)[-1]
+            #         json_object = {"name" : base_file_name, "bytes" : bytes_str}
+            #         json_string = json.dumps(json_object)
+            #    # pickle_string = str(pickle.dumps(json_object))
+            #    # prit(pickle_string)
+            #         #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
+            #         self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
+
+
+        elif event.event_type == 'created':
+            # Taken any action here when a file is modified.
+            print("Received created event - %s." % event.src_path)
+            with open('/files/DJI_0396.JPG', 'rb') as f:
                # file_bytes =f.read()
                 bytes_str = base64.b64encode(f.read()).decode('utf-8')
                 #print(bytes_str)
@@ -65,11 +83,6 @@ class Handler(FileSystemEventHandler):
                # prit(pickle_string)
                     #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
                     self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
-
-
-        elif event.event_type == 'created':
-            # Taken any action here when a file is modified.
-            print("Received created event - %s." % event.src_path)
 
 # def on_connect_local(client, userdata, flags, rc):
 #     print("connected to local broker with rc: " + str(rc))
