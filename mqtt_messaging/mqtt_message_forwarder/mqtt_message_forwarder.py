@@ -12,7 +12,7 @@ REMOTE_MQTT_PORT=1883
 REMOTE_MQTT_TOPIC=sys.argv[3]
 
 remote_mqttclient = mqtt.Client()
-remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 3600)
+remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 36000)
 
 def on_connect_local(client, userdata, flags, rc):
         print("connected to local broker with rc: " + str(rc))
@@ -30,7 +30,7 @@ def on_message(client,userdata, msg):
 
 local_mqttclient = mqtt.Client()
 local_mqttclient.on_connect = on_connect_local
-local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 3600)
+local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 36000)
 local_mqttclient.on_message = on_message
 
 # go into a loop

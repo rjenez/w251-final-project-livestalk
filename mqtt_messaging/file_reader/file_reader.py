@@ -25,7 +25,7 @@ class Watcher:
         local_mqttclient = mqtt.Client()
         #local_mqttclient.on_connect = on_connect_local
         #local_mqttclient.on_disconnect=on_disconnect_local
-        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 3600)
+        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 36000)
         event_handler = Handler(local_mqttclient)
         #event_handler = Handler()
         self.observer.schedule(event_handler, FILE_DIRECTORY, recursive=True)
