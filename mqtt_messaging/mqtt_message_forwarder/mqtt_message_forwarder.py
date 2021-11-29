@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import sys
+import json
 
 arguments = sys.argv
 
@@ -21,9 +22,9 @@ def on_connect_local(client, userdata, flags, rc):
 def on_message(client,userdata, msg):
   try:
     # if we wanted to re-publish this message, something like this should work
-    msg = msg.payload
-    print(msg)
-    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, msg)
+    data = json.loads(msg.payload)
+    print(data['name'])
+    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, msg.payload)
     print("sent")
   except:
     print("Unexpected error:", sys.exc_info()[0])
