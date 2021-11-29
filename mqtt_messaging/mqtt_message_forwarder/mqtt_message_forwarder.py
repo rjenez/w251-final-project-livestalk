@@ -23,7 +23,7 @@ def on_message(client,userdata, msg):
     print(data['name'])
     remote_mqttclient = mqtt.Client()
     remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 36000)
-    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, data['name'])
+    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, REMOTE_MQTT_TOPIC, payload=msg.payload, qos=0, retain=False)
     print("sent")
   except:
     print("Unexpected error:", sys.exc_info()[0])
