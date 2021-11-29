@@ -28,7 +28,7 @@ def on_message(client,userdata, msg):
         print(file_name)
     # Write bytes to file
         binary_file.write(image_data)
-    print(done_writing)
+    print("done_writing")
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
 
