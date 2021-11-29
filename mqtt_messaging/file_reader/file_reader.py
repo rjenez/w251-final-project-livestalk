@@ -50,6 +50,7 @@ class Handler(FileSystemEventHandler):
             return None
 
         elif event.event_type == 'modified':
+            print()
             # Take any action here when a file is first created.
             #print("Received modified event - %s." % event.src_path)
             # with open(event.src_path, 'rb') as f:
