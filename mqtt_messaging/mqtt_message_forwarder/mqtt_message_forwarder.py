@@ -10,6 +10,10 @@ LOCAL_MQTT_TOPIC=sys.argv[3]
 REMOTE_MQTT_HOST=sys.argv[2]
 REMOTE_MQTT_PORT=1883
 REMOTE_MQTT_TOPIC=sys.argv[3]
+
+remote_mqttclient = mqtt.Client()
+remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
+
 def on_connect_local(client, userdata, flags, rc):
         print("connected to local broker with rc: " + str(rc))
         client.subscribe(LOCAL_MQTT_TOPIC)
@@ -19,8 +23,6 @@ def on_message(client,userdata, msg):
     # if we wanted to re-publish this message, something like this should work
     msg = msg.payload
     print(msg)
-    remote_mqttclient = mqtt.Client()
-    remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
     remote_mqttclient.publish(REMOTE_MQTT_TOPIC, msg)
     print("sent")
   except:

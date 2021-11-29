@@ -69,16 +69,16 @@ class Handler(FileSystemEventHandler):
             # Taken any action here when a file is modified.
             print("Received created event - %s." % event.src_path)
 
-def on_connect_local(client, userdata, flags, rc):
-    print("connected to local broker with rc: " + str(rc))
+# def on_connect_local(client, userdata, flags, rc):
+#     print("connected to local broker with rc: " + str(rc))
+#
+# def on_disconnect_local(client, userdata, rc):
+#     print("disconnecting reason  "  +str(rc))
 
-def on_disconnect_local(client, userdata, rc):
-    print("disconnecting reason  "  +str(rc))
-
-print("trying to connect")
-local_mqttclient = mqtt.Client()
-local_mqttclient.on_connect = on_connect_local
-local_mqttclient.on_disconnect=on_disconnect_local
-local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+#print("trying to connect")
+# local_mqttclient = mqtt.Client()
+# local_mqttclient.on_connect = on_connect_local
+# local_mqttclient.on_disconnect=on_disconnect_local
+# local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
 w = Watcher()
 w.run()
