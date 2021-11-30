@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 import sys
 import json
 import time
@@ -22,9 +23,10 @@ def on_message(client,userdata, msg):
     # if we wanted to re-publish this message, something like this should work
     data = json.loads(msg.payload)
     print(data['name'])
-    remote_mqttclient = mqtt.Client()
-    remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
-    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg.payload, qos=1, retain=False)
+    publish.single(REMOTE_MQTT_TOPIC, msg.payload, qos=1, hostname=REMOTE_MQTT_HOST)
+    # remote_mqttclient = mqtt.Client()
+    # remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
+    # remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg.payload, qos=1, retain=False)
     time.sleep(1)
     print("sent")
   except:
