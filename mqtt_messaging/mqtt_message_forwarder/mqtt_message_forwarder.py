@@ -23,8 +23,8 @@ def on_message(client,userdata, msg):
     data = json.loads(msg.payload)
     print(data['name'])
     remote_mqttclient = mqtt.Client()
-    remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 36000)
-    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg.payload, qos=2, retain=True)
+    remote_mqttclient.connect(REMOTE_MQTT_HOST, REMOTE_MQTT_PORT, 60)
+    remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg.payload, qos=1, retain=False)
     time.sleep(1)
     print("sent")
   except:
