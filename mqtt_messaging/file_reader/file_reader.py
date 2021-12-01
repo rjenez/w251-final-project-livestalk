@@ -76,7 +76,7 @@ class Handler(FileSystemEventHandler):
                 bytes_compressed = f.read()
                 bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
                 opt = parse_opt()
-                opt.weights=['best.pt']
+                opt.weights=['/yolov5/best.pt']
                 id = identify(**vars(opt))
                 image, labels = id.detect(bytes_compressed)
                 annotated_bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
