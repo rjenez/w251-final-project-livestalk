@@ -1,11 +1,11 @@
 To set up messaging service
 
 On edge device (text in arrows like `<text>` represents a parameter whose name can be changed):
-  1. Build mqtt broker and file reader images by running the following in appropriate folders: 
+  1. Build mqtt broker and file reader images by running the following in this directory: 
       ```
-      docker build -t mqtt_broker .
-      docker build -t mqtt_message_forwarder .
-      docker build -t file_reader .
+      docker build -t mqtt_broker -f mqtt_broker/Dockerfile .
+      docker build -t mqtt_message_forwarder -f mqtt_message_forwarder/Dockerfile .
+      docker build -t file_reader -f file_reader/Dockerfile.yolov5mqtt .
       ```
   2. Create docker network (suggestion `mqtt`): 
       ```

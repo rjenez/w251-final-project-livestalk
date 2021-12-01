@@ -25,7 +25,7 @@ class Watcher:
         local_mqttclient = mqtt.Client()
         #local_mqttclient.on_connect = on_connect_local
         #local_mqttclient.on_disconnect=on_disconnect_local
-        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)  
+        local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 36000)
         event_handler = Handler(local_mqttclient)
         #event_handler = Handler()
         self.observer.schedule(event_handler, FILE_DIRECTORY, recursive=True)
@@ -49,33 +49,49 @@ class Handler(FileSystemEventHandler):
         if event.is_directory:
             return None
 
-        elif event.event_type == 'created':
+        elif event.event_type == 'modified':
             # Take any action here when a file is first created.
+            print("Received modified event - %s." % event.src_path)
+            # with open(event.src_path, 'rb') as f:
+            #    # file_bytes =f.read()
+            #     bytes_str = base64.b64encode(f.read()).decode('utf-8')
+            #     #print(bytes_str)
+            #     if bytes_str:
+            #         print('in')
+            #         base_file_name = event.src_path.rsplit('/', 1)[-1]
+            #         json_object = {"name" : base_file_name, "bytes" : bytes_str}
+            #         json_string = json.dumps(json_object)
+            #    # pickle_string = str(pickle.dumps(json_object))
+            #    # prit(pickle_string)
+            #         #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
+            #         self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
+
+
+        elif event.event_type == 'created':
+            # Taken any action here when a file is modified.
             print("Received created event - %s." % event.src_path)
             with open(event.src_path, 'rb') as f:
-               # file_bytes =f.read()
-                bytes_str = base64.b64encode(f.read())
-                json_object = {"name" : event.src_path, "bytes" : bytes_str}
-               # pickle_string = str(pickle.dumps(json_object))
-               # prit(pickle_string)
-                #self.mqtt_client.publish(LOCAL_MQTT_TOPIC, "test")
-                self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_object)
+                # file_bytes =f.read()
+                bytes_compressed = f.read()
+                bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
+                # print(bytes_str)
+                if bytes_str:
+                    print('in')
+                    base_file_name = event.src_path.rsplit('/', 1)[-1]
+                    json_object = {"name": base_file_name, "bytes": bytes_str}
+                    json_string = json.dumps(json_object)
+                    self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
 
+# def on_connect_local(client, userdata, flags, rc):
+#     print("connected to local broker with rc: " + str(rc))
+#
+# def on_disconnect_local(client, userdata, rc):
+#     print("disconnecting reason  "  +str(rc))
 
-        elif event.event_type == 'modified':
-            # Taken any action here when a file is modified.
-            print("Received modified event - %s." % event.src_path)
-
-def on_connect_local(client, userdata, flags, rc):
-    print("connected to local broker with rc: " + str(rc))
-
-def on_disconnect_local(client, userdata, rc):
-    print("disconnecting reason  "  +str(rc))
-
-print("trying to connect")
-local_mqttclient = mqtt.Client()
-local_mqttclient.on_connect = on_connect_local
-local_mqttclient.on_disconnect=on_disconnect_local
-local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+#print("trying to connect")
+# local_mqttclient = mqtt.Client()
+# local_mqttclient.on_connect = on_connect_local
+# local_mqttclient.on_disconnect=on_disconnect_local
+# local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
 w = Watcher()
 w.run()

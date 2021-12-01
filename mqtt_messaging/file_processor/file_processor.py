@@ -19,20 +19,22 @@ def on_message(client,userdata, msg):
     # if we wanted to re-publish this message, something like this should work
     # msg = msg.payload
     # remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
+    print("got message")
     data = json.loads(msg.payload)
     file_name = "var/www/s3/" + data["name"]
-    image_data = base64.b64decode(data["bytes"])
+    image_data = base64.b64decode(data["bytes"].encode('utf-8'))
     #print(data)
     with open(file_name, "wb") as binary_file:
-        print(msg.payload)
+        print(file_name)
     # Write bytes to file
         binary_file.write(image_data)
+    print("done_writing")
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
 
 local_mqttclient = mqtt.Client()
 local_mqttclient.on_connect = on_connect_local
-local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 60)
+local_mqttclient.connect(LOCAL_MQTT_HOST, LOCAL_MQTT_PORT, 36000)
 local_mqttclient.on_message = on_message
 
 
