@@ -8,7 +8,7 @@ from watchdog.observers import Observer
 import pickle
 import base64
 from watchdog.events import FileSystemEventHandler
-from identify import identify, pares_opt
+from identify import identify, parse_opt
 
 LOCAL_MQTT_HOST=sys.argv[1]
 LOCAL_MQTT_PORT=1883
