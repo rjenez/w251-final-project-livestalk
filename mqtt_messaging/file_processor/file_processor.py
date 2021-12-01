@@ -30,7 +30,7 @@ def on_message(client,userdata, msg):
         binary_file.write(image_data)
 
 
-    annotated_image_data = data["annotated_bytes"].encode('utf-8')
+    annotated_image_data =  base64.b64decode(data["annotated_bytes"].encode('utf-8'))
 # print(data)
     with open("var/www/s3/annotated_" + data["name"], "wb") as binary_file:
     # Write bytes to file
