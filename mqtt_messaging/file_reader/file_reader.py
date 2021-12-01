@@ -10,10 +10,10 @@ import base64
 from watchdog.events import FileSystemEventHandler
 from identify import identify, parse_opt
 
-LOCAL_MQTT_HOST=sys.argv[1]
+LOCAL_MQTT_HOST="mqtt_broker"
 LOCAL_MQTT_PORT=1883
-LOCAL_MQTT_TOPIC = sys.argv[2]
-FILE_DIRECTORY = sys.argv[3]
+LOCAL_MQTT_TOPIC = "topic"
+FILE_DIRECTORY = "/files"
 
 class Watcher:
     DIRECTORY_TO_WATCH = "/path/to/my/directory"
