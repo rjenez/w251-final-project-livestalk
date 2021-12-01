@@ -79,11 +79,12 @@ class Handler(FileSystemEventHandler):
                 opt.weights=['/yolov5/best.pt']
                 id = identify(**vars(opt))
                 image, labels = id.detect(bytes_compressed)
+                print('labels: ' + labels)
                 annotated_bytes_str = base64.b64encode(image).decode('utf-8')
                 if bytes_str:
                     print('in')
                     base_file_name = event.src_path.rsplit('/', 1)[-1]
-                    json_object = {"name": base_file_name, "bytes": bytes_str, "annotated_bytes":annotated_bytes_str, "count": len(labels)}
+                    json_object = {"name": base_file_name, "bytes": bytes_str, "annotated_bytes":image, "count": len(labels)}
                     json_string = json.dumps(json_object)
                     self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
 
