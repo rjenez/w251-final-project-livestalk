@@ -8,6 +8,7 @@ from watchdog.observers import Observer
 import pickle
 import base64
 from watchdog.events import FileSystemEventHandler
+from identify import identify, pares_opt
 
 LOCAL_MQTT_HOST=sys.argv[1]
 LOCAL_MQTT_PORT=1883
@@ -74,6 +75,9 @@ class Handler(FileSystemEventHandler):
                 # file_bytes =f.read()
                 bytes_compressed = f.read()
                 bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
+                opt = parse_opt()
+                id = identify(**vars(opt))
+                image, labels = id.detect(bytes_str)
                 # print(bytes_str)
                 if bytes_str:
                     print('in')
