@@ -76,13 +76,14 @@ class Handler(FileSystemEventHandler):
                 bytes_compressed = f.read()
                 bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
                 opt = parse_opt()
+                opt.weights=['best.pt']
                 id = identify(**vars(opt))
-                image, labels = id.detect(bytes_str)
-                annotated_bytes = base64.b64encode(image).decode('utf-8')
+                image, labels = id.detect(bytes_compressed)
+                annotated_bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
                 if bytes_str:
                     print('in')
                     base_file_name = event.src_path.rsplit('/', 1)[-1]
-                    json_object = {"name": base_file_name, "bytes": bytes_str, "annotated_bytes":annotated_bytes, "count": labels.size}
+                    json_object = {"name": base_file_name, "bytes": bytes_str, "annotated_bytes":annotated_bytes_str, "count": len(labels)}
                     json_string = json.dumps(json_object)
                     self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
 
