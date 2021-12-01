@@ -28,7 +28,14 @@ def on_message(client,userdata, msg):
         print(file_name)
     # Write bytes to file
         binary_file.write(image_data)
-    print("done_writing")
+
+
+    annotated_image_data = base64.b64decode(data["annotated_bytes"].encode('utf-8'))
+# print(data)
+    with open(file_name + "_annotated", "wb") as binary_file:
+    # Write bytes to file
+        binary_file.write(annotated_image_data)
+        print("done_writing")
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
 
