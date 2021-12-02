@@ -26,5 +26,5 @@ build_map(global_df, img_dir="Basalt_4_HOLDOUT_SET/")
 This will write out livestalk_map.html (the final UI) in the current working directory, which I think should be an s3 bucket which allows for web hosting.
 (Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. All images should be made public as well.).
 
-Jeff's script should keep calling build_map() in a listening loop so we can keep refreshing the .html file for "real-time" UI.
+Jeff's script should keep calling build_map() in the listening loop so we can keep refreshing the .html file for "real-time" UI.
 
