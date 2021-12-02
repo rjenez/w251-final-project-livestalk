@@ -1,5 +1,5 @@
 
-**Example usage of how to generate the final UI**
+**Example usage of how to generate the final UI (reading drone images in bytes rather than from .jpg file)**
 
 0. First import the dependencies
 ```
