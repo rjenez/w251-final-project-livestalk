@@ -1,6 +1,12 @@
 
 **Example usage of how to generate the final UI**
 
+0.) First import the dependencies
+```
+from georeference_from_byte import get_exif
+from map_ui import build_map
+```
+
 1.) Extract the necessary georeferenced data from an UNANNOTATED image in memory (which should contain exif and xml positioning data)
 ```
 single_row_df = get_exif(image_in_bytes)
