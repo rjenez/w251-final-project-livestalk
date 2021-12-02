@@ -23,6 +23,6 @@ single_row_df["cow_count"] = 5
 build_map(global_df, img_dir="Basalt_4_HOLDOUT_SET/")
 ```
 
-This will write out the .html UI in the current working directory, which I think should be an s3 bucket which allows for web hosting.
-(Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. All images should be made public as well.)
+This will write out livestalk_map.html (the final UI) in the current working directory, which I think should be an s3 bucket which allows for web hosting.
+(Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. All images should be made public as well.). It should keep re-generating the file as new images come in for "real-time" detection.
 
