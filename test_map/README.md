@@ -1,7 +1,7 @@
 
 **Example usage of how to generate the final UI (reading drone images in bytes rather than from .jpg file)**
 
-0. First import the dependencies
+0. Import the dependencies
 ```
 from georeference_from_byte import get_exif
 from map_ui import build_map
