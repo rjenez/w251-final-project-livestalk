@@ -1,6 +1,19 @@
-**Test Map Notes:**
 
-build_map.py generates a prototype UI using data from Ricardo's local neighborhood flyover.
-camera_calculator.py contains the class and methods used to derive the field of view polygon
-using the images' exif data.
-We will adapt the code for the farm locale and add additional UI functionality for the final Livestalk Map.
+**Example usage of how to generate the final UI**
+
+1.) Extract the necessary georeferenced data from an UNANNOTATED image in memory (which should contain exif and xml positioning data)
+```
+single_row_df = get_exif(image_in_bytes)
+```
+2.) Join in the yolov5 cow count
+
+```
+single_row_df["cow_count"] = 5
+```
+
+3.) Keep appending to a global dataframe as the images stream in and then call the build_map() bethod from map_ui.py
+
+```
+build_map(global_df, img_dir="Basalt_4_HOLDOUT_SET/")
+```
+(Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. All images should be made public as well.)
