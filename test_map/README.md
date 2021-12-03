@@ -3,6 +3,7 @@
 
 0. Import the dependencies
 ```
+import pandas as pd
 from georeference_from_byte import get_exif
 from map_ui import build_map
 ```
