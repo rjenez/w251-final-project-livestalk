@@ -5,6 +5,13 @@ import ast
 import json
 import base64
 
+import sys
+from georeference_from_byte import get_exif
+from map_ui import build_map
+
+
+df = pd.DataFrame()
+
 LOCAL_MQTT_HOST=sys.argv[1]
 LOCAL_MQTT_PORT=1883
 LOCAL_MQTT_TOPIC=sys.argv[2]
@@ -21,7 +28,7 @@ def on_message(client,userdata, msg):
     # remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
     print("got message")
     data = json.loads(msg.payload)
-    file_name = "var/www/s3/" + data["name"]
+    file_name = "var/www/s3/images/" + data["name"]
     image_data = base64.b64decode(data["bytes"].encode('utf-8'))
     #print(data)
     with open(file_name, "wb") as binary_file:
@@ -32,10 +39,16 @@ def on_message(client,userdata, msg):
 
     annotated_image_data =  base64.b64decode(data["annotated_bytes"].encode('utf-8'))
 # print(data)
-    with open("var/www/s3/annotated_" + data["name"], "wb") as binary_file:
+    with open("var/www/s3/annotated_images/" + data["name"], "wb") as binary_file:
     # Write bytes to file
         binary_file.write(annotated_image_data)
         print("done_writing")
+
+
+    single_row_df = get_exif(image_data)
+    single_row_df["cow_count"] = data['count']
+    df.append(single_row_df)
+    build_map(df, img_dir="https://251bucket.s3.us-east-2.amazonaws.com/annotated_images/")
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
 
