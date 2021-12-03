@@ -43,7 +43,7 @@ def build_map(exif_df, img_dir, sample_rate=1):
     folium.GeoJson(filtered_gdf["geometry"]).add_to(map)
 
     # Writes out html map object into current working directory (can be the same s3 bucket!)
-    map.save('livestalk_map_bytes.html')
+    map.save('/var/www/s3/livestalk_map_bytes.html')
 
     # Function can also return the map object directly, just uncomment below line
     # return map

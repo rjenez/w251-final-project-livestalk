@@ -23,7 +23,7 @@ def on_connect_local(client, userdata, flags, rc):
 	
 def on_message(client,userdata, msg):
   #try:
-    
+    global df
     # if we wanted to re-publish this message, something like this should work
     # msg = msg.payload
     # remote_mqttclient.publish(REMOTE_MQTT_TOPIC, payload=msg, qos=0, retain=False)
@@ -48,7 +48,12 @@ def on_message(client,userdata, msg):
 
     single_row_df = get_exif(image_data)
     single_row_df["cow_count"] = data['count']
-    df.append(single_row_df)
+    tmp = df.append(single_row_df)
+    df = tmp
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+        print(single_row_df)
+        print("df")
+        print(df)
     build_map(df, img_dir="https://251bucket.s3.us-east-2.amazonaws.com/annotated_images/")
   #except:
    # print("Unexpected error:", sys.exc_info()[0])
