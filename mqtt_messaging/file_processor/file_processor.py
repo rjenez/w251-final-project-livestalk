@@ -4,6 +4,7 @@ import pickle
 import ast
 import json
 import base64
+import pandas as pd
 
 import sys
 from georeference_from_byte import get_exif
