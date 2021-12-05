@@ -8,3 +8,4 @@ Files:
 - [Readme.md](./Readme.md) This file with all the detail for setting up and running the training.
 - [rtmp](./rtmp) Directory containing the RTMP server container to get live video streams
 - [yolov5](./yolov5) Directory containing the Yolov5 container, training scripts and object detect using yolov5 for the RTMP stream from the drone.
+- [test_map](./test_map) Directory containing the imagery field of view calculator, exif and xml parser, and map generation script used to generate the final UI.
