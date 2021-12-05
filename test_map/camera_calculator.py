@@ -5,7 +5,8 @@ The code has been repurposed for Team Livestalk's Fall 2021, W251 final project.
 More notes from the original author on the origin of the code are just below.
 """
 
-__author__ = 'Luigi Pirelli'
+__author__ = 'Justin Jeng'
+__originalauthor__ = 'Luigi Pirelli'
 __date__ = 'August 2019'
 __copyright__ = '(C) 2019, Luigi Pirelli'
 
