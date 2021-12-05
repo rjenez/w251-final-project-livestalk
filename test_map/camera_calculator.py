@@ -2,7 +2,8 @@
 This code is a modification of Luigi Pirelli's camera calculator code
 used to generate a "georeferenced" field of view vector from overhead imagery.
 The modification allows a bounding box to be generated in latitude, longitude units
-from an initial (lat, long) centroid.
+from an initial (lat, long) centroid. The code was used for Team Livestalk's W251
+Fall 2021 final project.
 
 More notes from the original author on the origin of the code are in the CamerCalculator class below.
 """
