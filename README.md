@@ -1,8 +1,7 @@
 # w251-final-project-livestalk
-This the code repo for W251 final project, Livestalk, using drones to count cattle (livestock).
-The process involves training image detection for cows in the field, via video from a drone.
-Once this is done, we can fly a drone and get live streams and count cows in the field as
-the drone flies with real time updates being shown on a map.
+This is the code repo for Team Livestalk's W251 Fall 2021 final project. The Livestalk project uses drones to detect and count cattle (livestock) and renders the information onto a realtime map for ranchers.
+The process involves training an object detection model for cows on a field or pasture from video frames.
+Once this is done, we can fly a drone, perform inference on a Jetson edge device mounted to a drone, and stream annotated images and count cows onto a map in real time.
 
 Files:
 - [Readme.md](./Readme.md) This file with all the detail for setting up and running the training
