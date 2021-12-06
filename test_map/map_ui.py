@@ -19,7 +19,7 @@ def build_map(exif_df, img_dir, sample_rate=1):
 
     # TODO: Define map center and zoom
     map_center_coord = [39.36395608, -107.0395296]  # [lat, long]
-    map = folium.Map(map_center_coord, zoom_start=18, tiles='cartodbpositron')
+    map = folium.Map(map_center_coord, zoom_start=17, tiles='cartodbpositron')
 
     # Add markers, cow counts, and image thumbnails for every image to the map.
     for c_lat, c_long, img_name, cow_count in zip(filtered_gdf["lat_dd"],
