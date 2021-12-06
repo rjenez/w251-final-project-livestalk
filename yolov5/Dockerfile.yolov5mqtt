@@ -1,15 +1,21 @@
-FROM nvcr.io/nvidia/l4t-pytorch:r32.6.1-pth1.9-py3
-
+FROM nvcr.io/nvidia/pytorch:21.11-py3
 # tested on Jetson NX
-# Install yolov5
+
 # Create working directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 RUN apt update && apt install -y  libssl-dev
 RUN pip3 install -U pip
-RUN git clone https://github.com/ultralytics/yolov5 --branch v6.0
+
+# Copy contents
+#COPY hw08 /usr/src/app
+#RUN git clone https://github.com/ultralytics/yolov5 --branch v6.0
+RUN git clone https://github.com/ultralytics/yolov5
 WORKDIR /usr/src/app/yolov5
+
+# Install dependencies (pip or conda)
+#RUN pip3 install -r requirements.txt
 
 RUN apt update && apt install -y libffi-dev python3-pip curl unzip python3-tk libopencv-dev python3-opencv 
 RUN pip3 install -U gsutil pyyaml tqdm cython #torchvision   

@@ -6,15 +6,7 @@ GPL license is above as required and the documentation is below
 This code is modified to act as a library call so that we can send one image
 at a time and have the results returned to the caller.
 
-Run inference on images, videos, directories, streams, etc.
-Usage:
-    $ python path/to/detect.py --weights yolov5s.pt --source 0  # webcam
-                                                             img.jpg  # image
-                                                             vid.mp4  # video
-                                                             path/  # directory
-                                                             path/*.jpg  # glob
-                                                             'https://youtu.be/Zgi9g1ksQHc'  # YouTube
-                                                             'rtsp://example.com/media.mp4'  # RTSP, RTMP, HTTP stream
+Run inference on image, producing detected image.
 """
 
 import argparse
@@ -45,12 +37,6 @@ from utils.general import apply_classifier, check_img_size, check_imshow, check_
 from utils.plots import Annotator, colors
 from utils.torch_utils import load_classifier, select_device, time_sync
 
-
-# from utils.datasets import IMG_FORMATS, VID_FORMATS, LoadImages, LoadStreams
-# from utils.general import (LOGGER, check_file, check_img_size, check_imshow, check_requirements, colorstr,
-#                            increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
-# from utils.plots import Annotator, colors, save_one_box
-# from utils.torch_utils import select_device, time_sync
 from utils.augmentations import letterbox
 
 class identify:
@@ -88,36 +74,7 @@ class identify:
             if classify:  # second-stage classifier
                 modelc = load_classifier(name='resnet50', n=2)  # initialize
                 modelc.load_state_dict(torch.load('resnet50.pt', map_location=device)['model']).to(device).eval()
-        """
-        elif onnx:
-            if dnn:
-                # check_requirements(('opencv-python>=4.5.4',))
-                net = cv2.dnn.readNetFromONNX(w)
-            else:
-                check_requirements(('onnx', 'onnxruntime'))
-                import onnxruntime
-                session = onnxruntime.InferenceSession(w, None)
-        else:  # TensorFlow models
-            check_requirements(('tensorflow>=2.4.1',))
-            import tensorflow as tf
-            if pb:  # https://www.tensorflow.org/guide/migrate#a_graphpb_or_graphpbtxt
-                def wrap_frozen_graph(gd, inputs, outputs):
-                    x = tf.compat.v1.wrap_function(lambda: tf.compat.v1.import_graph_def(gd, name=""), [])  # wrapped import
-                    return x.prune(tf.nest.map_structure(x.graph.as_graph_element, inputs),
-                                   tf.nest.map_structure(x.graph.as_graph_element, outputs))
 
-                graph_def = tf.Graph().as_graph_def()
-                graph_def.ParseFromString(open(w, 'rb').read())
-                frozen_func = wrap_frozen_graph(gd=graph_def, inputs="x:0", outputs="Identity:0")
-            elif saved_model:
-                model = tf.keras.models.load_model(w)
-            elif tflite:
-                interpreter = tf.lite.Interpreter(model_path=w)  # load TFLite model
-                interpreter.allocate_tensors()  # allocate
-                input_details = interpreter.get_input_details()  # inputs
-                output_details = interpreter.get_output_details()  # outputs
-                int8 = input_details[0]['dtype'] == np.uint8  # is TFLite quantized uint8 model
-        """
         self.pt = pt
         imgsz = check_img_size(imgsz, s=stride)  # check image size
 
@@ -169,8 +126,9 @@ class identify:
         pt = self.pt
         half = self.half
 
-        print('classes', classes)
-        
+        nparr = np.fromstring(im0s, np.uint8)
+        im0s = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
         #
         labels = [] #labels for image
 
@@ -230,7 +188,7 @@ class identify:
             for *xyxy, conf, cls in reversed(det):
                 xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                 line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
-                labels.append(('%g ' * len(line)).rstrip() % line + '\n')
+                labels.append(('%g ' * len(line)).rstrip() % line)
 
                 c = int(cls)  # integer class
                 label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
@@ -242,6 +200,7 @@ class identify:
             cv2.imshow("image", im0)
             cv2.waitKey(1000)  # 1 millisecond
 
+        im0 = cv2.imencode('.jpg', im0)[1].tostring()
         return im0,labels
 
 
@@ -254,7 +213,7 @@ def parse_opt():
     parser.add_argument('--iou-thres', type=float, default=0.45, help='NMS IoU threshold')
     parser.add_argument('--max-det', type=int, default=1000, help='maximum detections per image')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--view-img', action='store_true', help='show results')
+    parser.add_argument('--view-img', action='store_false', help='show results')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-crop', action='store_true', help='save cropped prediction boxes')
@@ -277,11 +236,15 @@ def parse_opt():
     # print_args(FILE.stem, opt)
     return opt
 
+from PIL import Image
 
 def main(opt):
     id = identify(**vars(opt)) # weights=opt.weights, device=opt.device,dnn=opt.dnn,half=opt.half,imgsz=opt.imgsz)
+    print(opt.weights)
+
     dataset = LoadImages(opt.source, img_size=id.imgsz, stride=id.stride, auto=id.pt)
     for path, img, im0s, vid_cap in dataset:
+        im0s = cv2.imencode('.jpg', im0s)[1].tostring()
         image,labels = id.detect(im0s,**vars(opt))
         print(labels)
 

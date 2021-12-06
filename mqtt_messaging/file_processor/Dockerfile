@@ -42,5 +42,7 @@ RUN chmod 755 /start-script.sh
 
 RUN apt install -y python3-dev python3-pip
 RUN pip3 install paho-mqtt
+
+
 ADD file_processor.py /file_processor.py
 #ENTRYPOINT ["python3","-u", "file_processor.py"]
