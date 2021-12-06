@@ -29,7 +29,7 @@ This will write out livestalk_map.html (the final UI) in the current working dir
 
 Jeff's script should keep calling build_map() in the listening loop so we can keep refreshing the .html file for "real-time" UI.
 
-**Methodology Details**
+**Georeferencing Methodology Details**
 
 We estimated each drone image's geographic frame of reference by following the calculations in this stack overflow post:
 https://stackoverflow.com/questions/38099915/calculating-coordinates-of-an-oblique-aerial-image
