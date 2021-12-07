@@ -6,3 +6,5 @@ The notebooks in this folder can be used to perform the following steps:
 2. Split data into train / validation / test sets (**resplit-*.ipynb**)
 3. Perform transformations and augmentations on the data (**augmentations-*.ipynb**)
 4. Train YOLOv5 on the produced dataset and evaluate the results (**yolov5-train-val.ipynb**)
+
+To execute these notebooks from a container, first run the file `dockerbuild_model.sh` to build the image, then run `docker_run.sh` to run the container. Once run, the Jupyter Lab environment should be accessible from http:/localhost:8889/.
