@@ -40,7 +40,7 @@ RUN pip3 install watchdog
 # example from https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_gui/py_video_display/py_video_display.html
 RUN mkdir -p /yolov5
 COPY mqtt_messaging/file_reader/file_reader.py /yolov5/file_reader.py
-COPY mqtt_messaging/file_reader/best.pt /yolov5/best.pt
+COPY model_training/model_weights/yolov5s.pt /yolov5/best.pt
 COPY yolov5/ /yolov5/
 RUN ls -la /yolov5/*
 #COPY haarcascade_frontalface_default.xml haarcascade_frontalface_default.xml
