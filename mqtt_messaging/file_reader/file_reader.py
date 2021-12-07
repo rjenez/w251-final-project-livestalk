@@ -8,11 +8,12 @@ from watchdog.observers import Observer
 import pickle
 import base64
 from watchdog.events import FileSystemEventHandler
+from identify import identify, parse_opt
 
-LOCAL_MQTT_HOST=sys.argv[1]
+LOCAL_MQTT_HOST="mqtt_broker"
 LOCAL_MQTT_PORT=1883
-LOCAL_MQTT_TOPIC = sys.argv[2]
-FILE_DIRECTORY = sys.argv[3]
+LOCAL_MQTT_TOPIC = "topic"
+FILE_DIRECTORY = "/files"
 
 class Watcher:
     DIRECTORY_TO_WATCH = "/path/to/my/directory"
@@ -74,11 +75,17 @@ class Handler(FileSystemEventHandler):
                 # file_bytes =f.read()
                 bytes_compressed = f.read()
                 bytes_str = base64.b64encode(bytes_compressed).decode('utf-8')
-                # print(bytes_str)
+                opt = parse_opt()
+                opt.weights=['/yolov5/best.pt']
+                opt.conf_thres = [0.45]
+                id = identify(**vars(opt))
+                image, labels = id.detect(bytes_compressed)
+                print(' '.join(labels))
+                annotated_bytes_str = base64.b64encode(image).decode('utf-8')
                 if bytes_str:
                     print('in')
                     base_file_name = event.src_path.rsplit('/', 1)[-1]
-                    json_object = {"name": base_file_name, "bytes": bytes_str}
+                    json_object = {"name": base_file_name, "bytes": bytes_str, "annotated_bytes":annotated_bytes_str, "count": len(labels)}
                     json_string = json.dumps(json_object)
                     self.mqtt_client.publish(LOCAL_MQTT_TOPIC, json_string)
 
