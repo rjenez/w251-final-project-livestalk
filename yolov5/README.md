@@ -15,6 +15,7 @@ Once the images are downloaded the next step is to execute training. You make ex
 You will need to update project.yaml that has the details for classes we want to use and specifics for where the images are (should be all set if you
 use the downloadroboflow.sh.
 For dockertrain.sh you will need to set the following in the environment file  model_profile.sh.
+```
 EPOCHS=50
 IMAGE_SIZE=736
 BATCH_SIZE=16
@@ -24,7 +25,7 @@ MODEL=yolov5m.pt
 #MODEL=yolov5x.pt
 FREEZE=10
 CONFIDENCE=0.45
-
+```
 
 Once the training is done, you may run detect by dockerdetect.sh on the images in the test set to see how well we did. You can look in the runs
 directory after completing to see the outcome of the training and the results. This detection uses the weights generated in the training step which
