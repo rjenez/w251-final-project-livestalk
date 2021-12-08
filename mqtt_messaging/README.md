@@ -1,11 +1,11 @@
 To set up messaging service
 
 On edge device (text in arrows like `<text>` represents a parameter whose name can be changed):
-  1. Build mqtt broker and file reader images by running the following in this directory: 
+  1. Build mqtt broker and file reader images by running the following in the repo root director: 
       ```
-      docker build -t mqtt_broker -f mqtt_broker/Dockerfile .
-      docker build -t mqtt_message_forwarder -f mqtt_message_forwarder/Dockerfile .
-      docker build -t file_reader -f file_reader/Dockerfile.yolov5mqtt .
+      docker build -t mqtt_broker -f mqtt_messaging/mqtt_broker/Dockerfile .
+      docker build -t mqtt_message_forwarder -f mqtt_messaging/mqtt_message_forwarder/Dockerfile .
+      docker build -t file_reader -f Dockerfile.yolov5mqttread 
       ```
   2. Create docker network (suggestion `mqtt`): 
       ```
@@ -21,13 +21,13 @@ On edge device (text in arrows like `<text>` represents a parameter whose name c
       ```
   5. Start mqtt file reader container that will read files from a specified directory and forward them through the pipeline: 
       ```
-      docker run -d -v <path_of_folder_to_read_from>:/files --name file_reader --network <network_name> file_reader mqtt_broker <topic_name> /files
+      docker run -d -v <path_of_folder_to_read_from>:/files --name file_reader --runtime nvidia --network <network_name> file_reader
       ```
 
 On cloud device:
-  1. Build mqtt broker images by running the following in appropriate folders: 
+  1. Build mqtt broker image by running the following in repo root folders: 
       ```
-      docker build -t mqtt_broker .
+      docker build -t mqtt_broker -f mqtt_messaging/mqtt_broker/Dockerfile .
       ```
   2. Create docker network (suggestion `mqtt`): 
       ```
@@ -42,7 +42,7 @@ On cloud device:
         b. `<AWS_SECRET_ACCESS_KEY>` which is aws secret access key for the account associated with the s3 bucket to save files to
         c. `<S3_BUCKET_NAME>` which is the s3 bucket name
       ```
-      sudo docker build --build-arg AWS_ACCESS_KEY=<AWS_ACCESS_KEY> --build-arg AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> --build-arg S3_BUCKET_NAME=<S3_BUCKET_NAME> -t file_processor .
+      sudo docker build --build-arg AWS_ACCESS_KEY=<AWS_ACCESS_KEY> --build-arg AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> --build-arg S3_BUCKET_NAME=<S3_BUCKET_NAME> -t file_processor -f Dockerfile.map_generation .
       ```
    5. Run file processor container
       ```
@@ -54,5 +54,5 @@ On cloud device:
       ```
    7. Run script in file processor container to start file processor
       ```
-      docker exec file_processor python3 -u file_processor.py mqtt_broker topic &
+      docker exec file_processor python3 -u file_processor.py mqtt_broker topic
       ```
