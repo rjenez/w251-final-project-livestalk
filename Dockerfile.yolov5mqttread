@@ -21,8 +21,6 @@ RUN apt-get install libsm6 libxrender1 libfontconfig1
 RUN apt-get install -y x11-xserver-utils
 
 RUN pip3 install requests
-#RUN apt install -y python3-pandas
-#RUN pip3 install pandas
 RUN pip3 install seaborn
 RUN pip3 install -U pip
 RUN pip list
@@ -37,12 +35,13 @@ RUN pip3 install paho-mqtt
 RUN pip3 install Cython
 RUN pip3 install numpy
 RUN pip3 install watchdog
-# example from https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_gui/py_video_display/py_video_display.html
+
+# Add needed files to container
 RUN mkdir -p /yolov5
 COPY mqtt_messaging/file_reader/file_reader.py /yolov5/file_reader.py
 COPY model_training/model_weights/yolov5s.pt /yolov5/best.pt
 COPY yolov5/ /yolov5/
+
 RUN ls -la /yolov5/*
-#COPY haarcascade_frontalface_default.xml haarcascade_frontalface_default.xml
 RUN mkdir /files
 ENTRYPOINT ["python3","-u", "/yolov5/file_reader.py"]
