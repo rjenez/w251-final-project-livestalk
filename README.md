@@ -8,3 +8,5 @@ Files:
 - [rtmp](./rtmp) Directory containing the RTMP server container to get live video streams
 - [yolov5](./yolov5) Directory containing the Yolov5 container, training scripts and object detect using yolov5 for the RTMP stream from the drone
 - [test_map](./test_map) Directory containing the imagery field of view calculator, image exif and xml parser, and map generation script used to generate the final UI
+- [mqtt_messaging](./mqtt_messaging) Directory containing all relevant files for setting up full image processing pipeline
+- [Pipeline Setup README](./mqtt_messaging/README.md) Instructions for setting up full image pipeline
