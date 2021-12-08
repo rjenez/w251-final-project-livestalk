@@ -37,7 +37,7 @@ This library can be tested by running dockeridentify.sh
 
 Files:
 - [Readme.md](./Readme.md) This file with all the detail for setting up and running the training.
-- [dockerbuildyolo.sh](./dockerbuildyolo.sh)) Build Docker container with yolov5 for nx
+- [dockerbuildyolo.sh](./dockerbuildyolo.sh) Build Docker container with yolov5 for nx
 - [Dockerfile.yolov5](./Dockerfile.yolov5) Docker file for building yolov5 container
 - [Dockerfile.yolov5mqtt](./Dockerfile.yolov5mqtt) Docker file for building yolov5 and mqtt in one container.
 - [downloadroboflow.sh](./downloadroboflow.sh) Script to download image and label data from roboflow. Some configuration required.
