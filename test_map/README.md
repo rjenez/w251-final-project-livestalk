@@ -1,7 +1,14 @@
 
 ![map_image](map_image.png)
 
-**Example usage of how to generate the final UI (reading drone images in bytes rather than from .jpg file)**
+**Georeferencing Methodology:**
+
+We estimated each drone image's geographic frame of reference by following the calculations in this [stack overflow post](https://stackoverflow.com/questions/38099915/calculating-coordinates-of-an-oblique-aerial-image):
+
+
+We took the yaw, pitch, and roll of the sensor as well as the drone camera's vertical and horizontal field of view to calculate four rays of each image and the points at which the rays intersected the ground. All inputs needed to be converted from degrees into radians. For latitude and longitude of the drone, we needed to convert such coordinates into UTM (cartesian coordinates represented in meters relative to some axis). We modified a Python script which calculated the ray intersection offsets to account for the actual position of the drone. We also had to project the final bounding boxes into the correct local UTM zone (13 North for Basalt, CO) for proper rendering.
+
+**Example usage of how to generate the final UI (using drone images in bytes vs .jpg file)**
 
 0. Import the dependencies
 ```
@@ -29,9 +36,4 @@ build_map(global_df, img_dir="Basalt_4_HOLDOUT_SET/")
 This will write out livestalk_map.html (the final UI) in the current working directory, which I think should be an s3 bucket which allows for web hosting.
 (Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. This will generate a hyperlink within the map tooltip to the annotated image. All images should be made public as well.).
 
-**Georeferencing Methodology:**
 
-We estimated each drone image's geographic frame of reference by following the calculations in this [stack overflow post](https://stackoverflow.com/questions/38099915/calculating-coordinates-of-an-oblique-aerial-image):
-
-
-We took the yaw, pitch, and roll of the sensor as well as the drone camera's vertical and horizontal field of view to calculate four rays of each image and the points at which the rays intersected the ground. All inputs needed to be converted from degrees into radians. For latitude and longitude of the drone, we needed to convert such coordinates into UTM (cartesian coordinates represented in meters relative to some axis). We modified a Python script which calculated the ray intersection offsets to account for the actual position of the drone. We also had to project the final bounding boxes into the correct local UTM zone (13 North for Basalt, CO) for proper rendering.
