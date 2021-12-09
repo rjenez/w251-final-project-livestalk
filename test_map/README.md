@@ -29,7 +29,7 @@ build_map(global_df, img_dir="Basalt_4_HOLDOUT_SET/")
 This will write out livestalk_map.html (the final UI) in the current working directory, which I think should be an s3 bucket which allows for web hosting.
 (Note the img_dir should be the public s3 bucket http:// string where we are writing the ANNOTATED images to. This will generate a hyperlink within the map tooltip to the annotated image. All images should be made public as well.).
 
-**Georeferencing Methodology Details**
+**Georeferencing Methodology:**
 
 We estimated each drone image's geographic frame of reference by following the calculations in this [stack overflow post](https://stackoverflow.com/questions/38099915/calculating-coordinates-of-an-oblique-aerial-image):
 
