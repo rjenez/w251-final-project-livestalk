@@ -1,4 +1,6 @@
 
+![map_image](test_map/map_image.png)
+
 **Example usage of how to generate the final UI (reading drone images in bytes rather than from .jpg file)**
 
 0. Import the dependencies
