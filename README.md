@@ -4,6 +4,7 @@ The process involves training an object detection model for cows on a field or p
 Once the model is trained, we can fly a drone, perform inference on a Jetson edge device mounted to a drone, and stream annotated images and count cows onto a map so that ranchers can take stock (no pun intended) of their livestock in realtime.
 
 Files:
+- [Livestalk Paper](./livestalk.pdf) This file describes our process of developing an end-to-end MVP of Livestalk. 
 - [Readme.md](./Readme.md) This file with all the detail for setting up and running the training
 - [rtmp](./rtmp) Directory containing the RTMP server container to get live video streams (no longer used once we went to individual images)
 - [yolov5](./yolov5) Directory containing the Yolov5 container, training scripts and object detection, image identification using yolov5 for images
