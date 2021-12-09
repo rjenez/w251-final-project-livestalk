@@ -6,7 +6,7 @@
 We estimated each drone image's geographic frame of reference by following the calculations in this [stack overflow post](https://stackoverflow.com/questions/38099915/calculating-coordinates-of-an-oblique-aerial-image).
 
 
-We took the yaw, pitch, and roll of the sensor as well as the drone camera's vertical and horizontal field of view to calculate four rays of each image and the points at which the rays intersected the ground. All inputs needed to be converted from degrees into radians. For latitude and longitude of the drone, we needed to convert such coordinates into UTM (cartesian coordinates represented in meters relative to some axis). We modified a Python script which calculated the ray intersection offsets to account for the actual position of the drone. We also had to project the final bounding boxes into the correct local UTM zone (13 North for Basalt, CO) for proper rendering.
+We took the yaw, pitch, and roll of the sensor as well as the drone camera's vertical and horizontal field of view to calculate four rays of each image and the points at which the rays intersected the ground. All inputs needed to be converted from degrees into radians. For latitude and longitude of the drone, we needed to convert coordinates from decimal degrees into UTM (cartesian coordinates represented in meters). We modified an open source Python script which calculated the ray intersection offsets to account for the actual position of the drone. We also had to project the final bounding boxes into the correct local UTM zone (13 North for Basalt, CO) for proper rendering.
 
 **Example usage of how to generate the final UI (using drone images in bytes vs .jpg file)**
 
