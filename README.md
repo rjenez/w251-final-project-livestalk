@@ -12,3 +12,4 @@ Files:
 - [test_map](./test_map) Directory containing the imagery field of view calculator, image exif and xml parser, and map generation script used to generate the final UI
 - [mqtt_messaging](./mqtt_messaging) Directory containing all relevant files for setting up full image processing pipeline
 - [Pipeline Setup README](./mqtt_messaging/README.md) Instructions for setting up full image pipeline
+ 
